@@ -1,0 +1,100 @@
+@font-face {
+  font-family: "Stonecross";
+  src: url("assets/fonts/stonecross.woff2") format("woff2");
+}
+
+html,
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Stonecross", serif;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+@keyframes dreamz {
+  from {
+    filter: hue-rotate(0deg) saturate(1.6);
+  }
+  to {
+    filter: hue-rotate(360deg) saturate(1.6);
+  }
+}
+
+a,
+a:visited {
+  color: #ffb5bd;
+  text-decoration: none;
+}
+
+#container {
+  animation: dreamz 240s infinite;
+  height: 100vh;
+}
+
+.overlay {
+  align-items: center;
+  background-image: linear-gradient(45deg, #0e0e9caa 0%, #7b192aaa 100%);
+  color: white;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 5;
+}
+
+.overlay p {
+  margin: 1.618rem 0 0;
+}
+
+#intro {
+  font-size: 1.382rem;
+}
+
+#golden-ratio {
+  width: 50vw;
+}
+
+p.subtitle {
+  margin-top: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+#text-display {
+  font-family: monospace;
+  font-size: 1.618rem;
+  color: white;
+  position: absolute;
+  text-align: center;
+  text-shadow: 0 0 10px black;
+  top: 2rem;
+  width: 100%;
+  z-index: 4;
+}
+
+.text-display-inline {
+  background-image: linear-gradient(45deg, #0e0e9caa 0%, #7b192aaa 100%);
+  line-height: 1.618;
+}
+
+.crystal-ball-decor:before {
+  content: "\1f52e ";
+}

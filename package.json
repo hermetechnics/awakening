@@ -1,0 +1,22 @@
+{
+  "name": "awakening",
+  "version": "1.0.0",
+  "description": "a ritual of permutation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hermetechnics/awakening.git"
+  },
+  "author": "hermetechnics",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hermetechnics/awakening/issues"
+  },
+  "homepage": "https://github.com/hermetechnics/awakening#readme",
+  "dependencies": {
+    "sharawadji": "^0.4.4"
+  }
+}
