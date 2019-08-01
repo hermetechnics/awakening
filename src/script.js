@@ -5,7 +5,7 @@ const enableClickToGoCB = context => {
 };
 
 export const IntroScript = [
-  { duration: 1 },
+  { duration: 2 },
   { text: "Wake up." },
   { text: "It's time to go" },
   { text: "I will lead you on a journey", time: 3, duration: 7 },
@@ -50,17 +50,21 @@ export const IntroScript = [
 ];
 
 export const Checkpoint1IntroScript = [
-  { text: "In this ephemeral world" },
-  { text: "time is constrained" },
-  { text: "by the two guardian sigils" },
-  { text: " - extrema of power;" },
-  { text: "The Request" },
-  { text: "and The Response." },
+  { text: "In this ephemeral world", time: 3, duration: 6 },
+  { text: "time is constrained", duration: 3 },
+  { text: "by the two guardian sigils", time: 3, duration: 6 },
+  { text: " - extrema of power;", duration: 3 },
+  { text: "The Request", time: 5, duration: 10 },
+  { text: "and The Response.", duration: 5 },
   { text: "The third sigil is a secret" },
   { text: "where true power lies." },
-  { text: "We complete the triad by placing it in the middle," },
-  { text: "like a bridge:" },
-  { text: "The Interface." }
+  {
+    text: "We complete the triad by placing it in the middle,",
+    time: 5,
+    duration: 3
+  },
+  { text: "like a bridge:", duration: 2 },
+  { text: "The Interface.", duration: 5 }
 ];
 
 export const Checkpoint1EndScript = [
@@ -75,14 +79,15 @@ export const Checkpoint1EndScript = [
   { text: "brings you closer to the truth." }
 ];
 
-export const scheduleScript = async (textDisplay, script, context) => {
+export const scheduleScript = (textDisplay, script, context) => {
   let currentTime = 0;
+  let timeouts = [];
+
   for (let line of script) {
     const duration = line.duration || DEFAULT_DURATION;
     const time = line.time || duration;
-    currentTime += time;
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       if (line.text) {
         textDisplay.addLine(line.text, duration * 1000);
       }
@@ -91,5 +96,16 @@ export const scheduleScript = async (textDisplay, script, context) => {
         line.callback(context);
       }
     }, currentTime * 1000);
+
+    currentTime += time;
+    timeouts.push(timeout);
   }
+
+  return {
+    stop: () => {
+      timeouts.forEach(clearTimeout);
+      timeouts = [];
+      textDisplay.clear();
+    }
+  };
 };
