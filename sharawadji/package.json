@@ -1,0 +1,68 @@
+{
+  "_from": "sharawadji",
+  "_id": "sharawadji@0.4.4",
+  "_inBundle": false,
+  "_integrity": "sha512-0JqKcnK2tByJKDUHbYT902uPmcNNNEAZRpIRDxNz+Zsh+yMYz2Ji9bDQ0pOyNW+qkGm19UultszreoOT2S8jIA==",
+  "_location": "/sharawadji",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "sharawadji",
+    "name": "sharawadji",
+    "escapedName": "sharawadji",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/sharawadji/-/sharawadji-0.4.4.tgz",
+  "_shasum": "742e07940f68f3352af1a7467bf3a5041cd255ab",
+  "_spec": "sharawadji",
+  "_where": "/home/jakub/code/awakening",
+  "author": {
+    "name": "Jakub Fiala"
+  },
+  "bugs": {
+    "url": "https://github.com/jakubfiala/sharawadji/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A library for playing spatialised audio localised in embedded Google Street View.",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-runtime": "^6.26.0",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "homepage": "https://github.com/jakubfiala/sharawadji#readme",
+  "keywords": [
+    "audio",
+    "google",
+    "street",
+    "view",
+    "web"
+  ],
+  "license": "MIT",
+  "main": "dist/sharawadji.min.js",
+  "name": "sharawadji",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakubfiala/sharawadji.git"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "dev": "NODE_ENV=development webpack-dev-server",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.4.4"
+}

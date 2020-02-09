@@ -5,7 +5,7 @@ import {
   IntroScript,
   Checkpoint1IntroScript
 } from "./script.js";
-import { Sharawadji } from "../node_modules/sharawadji/src/index.js";
+import { Sharawadji } from "../sharawadji/src/index.js";
 import { latLngDist } from "./utils.js";
 import { fakeCaptcha } from "./fakeCaptcha.js";
 
