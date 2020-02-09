@@ -4,6 +4,54 @@ const enableClickToGoCB = context => {
   context.map.setOptions({ clickToGo: true });
 };
 
+const flashStatus = (text, duration = 5) => context => {
+  context.statusContainer.innerText = text;
+  context.statusContainer.classList.add('fade-in');
+  setTimeout(() => {
+    context.statusContainer.innerText = '';
+    context.statusContainer.classList.remove('fade-in');
+  }, duration * 1000);
+};
+
+const showFakeCaptcha = (callback = () => {}) => context => {
+  const captcha = context.fakeCaptchas[0];
+  captcha.element.hidden = false;
+  const listener = e => {
+    callback(e, context);
+    captcha.checkbox.removeEventListener('click', listener);
+  };
+
+  captcha.checkbox.addEventListener('click', listener);
+}
+
+const hideFakeCaptcha = context => {
+  const captcha = context.fakeCaptchas[0];
+  captcha.element.hidden = true;
+}
+
+const showSigil = name => context => {
+  const sigil = document.getElementById(`sigil-${name}`);
+  const sigilVideos = [...sigil.getElementsByTagName('video')];
+
+  Promise.all(sigilVideos.map(v => v.play())).then(() => sigil.classList.remove('sigil--hidden'));
+};
+
+const hideSigil = name => context => {
+  const sigil = document.getElementById(`sigil-${name}`);
+  sigil.classList.add('sigil--hidden');
+}
+
+const hideAllSigils = (c) => (hideSigil("request")(c), hideSigil("response")(c), hideSigil("interface")(c));
+
+const updateSoundTrackVolume = volume => context => {
+  console.log('sound', volume);
+  const { masterGain, audioContext } = context;
+  masterGain.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 7);
+}
+
+const fadeInSoundTrack = updateSoundTrackVolume(1);
+const fadeOutSoundTrack = updateSoundTrackVolume(0);
+
 export const IntroScript = [
   { duration: 2 },
   { text: "Wake up." },
@@ -50,12 +98,24 @@ export const IntroScript = [
 ];
 
 export const Checkpoint1IntroScript = [
-  { text: "In this ephemeral world", time: 3, duration: 6 },
+  {
+    text: "",
+    duration: 5,
+    callback: (context) => {
+      flashStatus("Phase One: The Dharma Wrapper")(context);
+      fadeOutSoundTrack(context);
+    }
+  },
+  {
+    text: "In this ephemeral world",
+    time: 3,
+    duration: 6
+  },
   { text: "time is constrained", duration: 3 },
   { text: "by the two guardian sigils", time: 3, duration: 6 },
   { text: " - extrema of power;", duration: 3 },
-  { text: "The Request", time: 5, duration: 10 },
-  { text: "and The Response.", duration: 5 },
+  { text: "The Request", time: 5, duration: 10, callback: showSigil("request") },
+  { text: "and The Response.", duration: 5, callback: showSigil("response") },
   { text: "The third sigil is a secret" },
   { text: "where true power lies." },
   {
@@ -63,12 +123,24 @@ export const Checkpoint1IntroScript = [
     time: 5,
     duration: 3
   },
-  { text: "like a bridge:", duration: 2 },
-  { text: "The Interface.", duration: 5 }
+  { text: "like a bridge:", duration: 2, callback: showSigil("interface") },
+  { text: "The Interface.", duration: 5 },
+  { text: "The first step in a journey is to ask for help - ", duration: 2 },
+  { text: "recognize the state of your being,", duration: 2 },
+  { text: "take Refuge in who you are", duration: 3 },
+  { text: "and who you are not.", duration: 2 },
+  { text: "",
+    duration: 2,
+    callback: showFakeCaptcha((e, context) => {
+      setTimeout(() => {
+        hideFakeCaptcha(context);
+        scheduleScript(Checkpoint1EndScript, context);
+      }, 3000);
+    }) },
 ];
 
 export const Checkpoint1EndScript = [
-  { text: "The stars are aligned." },
+  { text: "The stars are aligned.", callback: hideAllSigils },
   { text: "There are points ahead of you - " },
   { text: "three ever-changing sites of learning." },
   { text: "Visit them in the correct order" },
@@ -76,10 +148,11 @@ export const Checkpoint1EndScript = [
   { text: "The journey, like most of this algorithmic world" },
   { text: "may be tedious and repetitive." },
   { text: "But fear not - for every moment of learning" },
-  { text: "brings you closer to the truth." }
+  { text: "brings you closer to the truth.", callback: fadeInSoundTrack }
 ];
 
-export const scheduleScript = (textDisplay, script, context) => {
+export const scheduleScript = (script, context) => {
+  const { textDisplay } = context;
   let currentTime = 0;
   let timeouts = [];
 

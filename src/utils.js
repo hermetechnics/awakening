@@ -2,6 +2,7 @@ const EARTH_RADIUS = 6378137;
 const KM_TO_MILES = 0.000621371192;
 
 const rad = x => (x * Math.PI) / 180;
+const deg = x => (x * 180) / Math.PI;
 
 const latLngDist = function(p1, p2, metric) {
   const dLat = rad(p2.lat() - p1.lat());
@@ -28,4 +29,11 @@ latLngDist.metrics = {
   KILOMETERS: 1
 };
 
-export { latLngDist };
+function* enumerate(iterable) {
+  let count = 0;
+  for (let item of iterable) {
+    yield [count++, item];
+  }
+}
+
+export { latLngDist, rad, deg, enumerate };

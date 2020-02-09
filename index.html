@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Awakening by Hermetechnics Inc.</title>
+    <title>Awakening by Permutation | Hermetechnics Inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyA1VOiLnJEwz3HzcDxEExa_tCTu5KKOoqQ&v=3.exp"></script>
@@ -12,7 +12,8 @@
   <body>
     <audio id="bg-audio" src="assets/audio/crickets.mp3" loop></audio>
     <main id="container"></main>
-    <div id="text-display"></div>
+    <div id="text-display" class="text-overlay"></div>
+    <div id="status-display" class="text-overlay"></div>
     <div id="intro" class="overlay">
       <svg
         id="golden-ratio"
@@ -71,5 +72,60 @@
       </p>
       <p>☥ Click to begin ☥</p>
     </div>
+    <form class="fake-captcha" hidden>
+      <input type="checkbox" name="fake-captcha-cb" id="fake-captcha-cb" />
+      <div class="fake-captcha__checkbox"><div class="icon"></div></div>
+      <label class="fake-captcha__label" for="fake-captcha-cb"
+        >I'm not a robot</label
+      >
+      <div class="fake-captcha__logo">
+        <span class="fake-captcha__icon">🔮</span>hermeCAPTCHA<br />No Privacy -
+        No Terms
+      </div>
+    </form>
+    <section id="sigils">
+      <div id="sigil-request" class="sigil sigil--hidden">
+        <video
+          class="sigil-video sigil-video--blur"
+          src="assets/video/request-sigil.mp4"
+          autoplay
+          muted
+        ></video>
+        <video
+          class="sigil-video"
+          src="assets/video/request-sigil.mp4"
+          autoplay
+          muted
+        ></video>
+      </div>
+      <div id="sigil-interface" class="sigil sigil--hidden">
+        <video
+          class="sigil-video sigil-video--blur"
+          src="assets/video/interface-sigil.mp4"
+          autoplay
+          muted
+        ></video>
+        <video
+          class="sigil-video"
+          src="assets/video/interface-sigil.mp4"
+          autoplay
+          muted
+        ></video>
+      </div>
+      <div id="sigil-response" class="sigil sigil--hidden">
+        <video
+          class="sigil-video sigil-video--blur"
+          src="assets/video/response-sigil.mp4"
+          autoplay
+          muted
+        ></video>
+        <video
+          class="sigil-video"
+          src="assets/video/response-sigil.mp4"
+          autoplay
+          muted
+        ></video>
+      </div>
+    </section>
   </body>
 </html>

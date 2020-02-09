@@ -7,6 +7,7 @@ import {
 } from "./script.js";
 import { Sharawadji } from "../node_modules/sharawadji/src/index.js";
 import { latLngDist } from "./utils.js";
+import { fakeCaptcha } from "./fakeCaptcha.js";
 
 const INIT_RAMP = 20;
 
@@ -14,9 +15,14 @@ const container = document.getElementById("container");
 const intro = document.getElementById("intro");
 const bgAudio = document.getElementById("bg-audio");
 const textContainer = document.getElementById("text-display");
+const statusContainer = document.getElementById("status-display");
+const fakeCaptchas = Array.from(
+  document.getElementsByClassName("fake-captcha")
+).map(c => fakeCaptcha(c));
 
 const textDisplay = new TextDisplay(textContainer);
 let currentScript = null;
+let audioContext, masterGain = null;
 
 const debug = location.search.includes("debug=true");
 
@@ -45,9 +51,10 @@ const Checkpoints = [
     lng: -69.3805445,
     callback: () => {
       currentScript.stop();
-      currentScript = scheduleScript(textDisplay, Checkpoint1IntroScript, {
+      currentScript = scheduleScript(Checkpoint1IntroScript, {
         map,
-        bgAudio
+        bgAudio,
+        statusContainer, fakeCaptchas, textDisplay, masterGain, audioContext
       });
     }
   }
@@ -90,18 +97,15 @@ const initialize = event => {
   intro.classList.add("hidden");
   bgAudio.volume = 0.3;
 
-  speechSynthesis.speak(new SpeechSynthesisUtterance("Wake up"));
-
-  currentScript = scheduleScript(textDisplay, IntroScript, { map, bgAudio });
-
-  const audioContext = new AudioContext();
-  const masterGain = new GainNode(audioContext, { gain: 0 });
+  audioContext = new AudioContext();
+  masterGain = new GainNode(audioContext, { gain: 0 });
   const bgNode = new MediaElementAudioSourceNode(audioContext, {
     mediaElement: bgAudio
   });
   bgNode.connect(masterGain).connect(audioContext.destination);
   bgAudio.play();
 
+  currentScript = scheduleScript(IntroScript, { textDisplay, map, bgAudio, statusContainer, fakeCaptchas, masterGain, audioContext });
   startScore(audioContext, masterGain);
 
   masterGain.gain.linearRampToValueAtTime(
