@@ -8,7 +8,12 @@ export const Locations = {
     position: new google.maps.LatLng(-33.3597461,-70.6971737),
     heading: 10.51,
     pitch: 79,
-  }
+  },
+  'Trail Over Mill Valley, CA': {
+    position: new google.maps.LatLng(37.8849199, -122.555082),
+    heading: 278.54,
+    pitch: 75,
+  },
 }
 
 export const teleport = context => location => {

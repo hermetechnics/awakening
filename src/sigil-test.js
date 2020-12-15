@@ -1,5 +1,5 @@
 import { LSystem } from "./l-system.js";
-import { rad, enumerate } from "./utils.js";
+import { rad } from "./utils.js";
 
 const MAX_ITERATIONS = 6;
 const FW_SPEED = -4;
